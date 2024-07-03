@@ -1,0 +1,160 @@
+---
+title: "Capstone 2"
+output: html_document
+date: "2024-07-03"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Capstone 2
+
+DATA
+
+```{r}
+data_nn <- read_csv("Desktop/data_nn.csv")
+View(data_nn)
+```
+
+```{r}
+library("readr")
+library("dplyr")
+library("ggplot2")
+library("tidyverse")
+library("plotly")
+library("stringr")
+library("tidyr")
+library("tidyverse")
+```
+
+## Popularity Names Popular names come and go. 
+
+## Depending on the generation/era
+
+```{r}
+data_nn$Decade <- 
+
+data_nn[data_nn$Year >= 1800 & data_nn$Year <= 1809, "Decade"] <- 1800
+data_nn[data_nn$Year >= 1810 & data_nn$Year <= 1819, "Decade"] <- 1810
+data_nn[data_nn$Year >= 1820 & data_nn$Year <= 1829, "Decade"] <- 1820
+data_nn[data_nn$Year >= 1830 & data_nn$Year <= 1839, "Decade"] <- 1830
+data_nn[data_nn$Year >= 1840 & data_nn$Year <= 1849, "Decade"] <- 1840
+data_nn[data_nn$Year >= 1850 & data_nn$Year <= 1859, "Decade"] <- 1850
+data_nn[data_nn$Year >= 1860 & data_nn$Year <= 1869, "Decade"] <- 1860
+data_nn[data_nn$Year >= 1870 & data_nn$Year <= 1879, "Decade"] <- 1870
+data_nn[data_nn$Year >= 1880 & data_nn$Year <= 1889, "Decade"] <- 1880
+
+View(data_nn %>% select("Name","Year","Decade"))
+```
+
+```{r}
+data_nn_grouped <- group_by(data_nn, Decade, Count)
+F_data_nn <- filter(data_nn_grouped, Gender == 'F', Decade != "pre-1800" & Decade != "1900s")
+View(F_data_nn)
+```
+
+```{r}
+F_data_sorted <- F_data_nn %>% arrange(desc(Count))
+View(F_data_sorted)
+
+F_nn_1800 <- filter(F_data_sorted, Decade == 1800)
+View(head(F_nn_1800))
+F_1900 <- F_nn_1800[!duplicated(F_nn_1800$Name), ]
+View(head(F_1800))
+
+F_nn_1810 <- filter(F_data_sorted, Decade == 1810)
+F_1810 <- F_nn_1810[!duplicated(F_nn_1810$Name), ]
+
+F_nn_1820 <- filter(F_data_sorted, Decade == 1820)
+F_1820 <- F_nn_1820[!duplicated(F_nn_1820$Name), ]
+
+F_nn_1830 <- filter(F_data_sorted, Decade == 1830)
+F_1830 <- F_nn_1830[!duplicated(F_nn_1830$Name), ]
+
+F_nn_1840 <- filter(F_data_sorted, Decade == 1840)
+F_1840 <- F_nn_1840[!duplicated(F_nn_1840$Name), ]
+
+F_nn_1850 <- filter(F_data_sorted, Decade == 1850)
+F_1850 <- F_nn_1850[!duplicated(F_nn_1850$Name), ]
+
+F_nn_1860 <- filter(F_data_sorted, Decade == 1860)
+F_1860 <- F_nn_1860[!duplicated(F_nn_1860$Name), ]
+
+F_nn_1870 <- filter(F_data_sorted, Decade == 1870)
+F_1870 <- F_nn_1870[!duplicated(F_nn_1870$Name), ]
+
+F_nn_1890 <- filter(F_data_sorted, Decade == 1890)
+F_1890 <- F_nn_1890[!duplicated(F_nn_1890$Name), ]
+```
+
+```{r}
+M_data_nn <- filter(data_nn_grouped, Gender == 'M', Decade != "pre-1800" & Decade != "1900s")
+View(M_data_nn)
+```
+
+```{r}
+M_data_sorted <- M_data_nn %>% arrange(desc(Count))
+View(M_data_sorted)
+
+M_nn_1800 <- filter(M_data_sorted, Decade == 1800)
+View(head(M_nn_1800))
+M_1900 <- M_nn_1900[!duplicated(M_nn_1900$Name), ]
+View(head(M_1900))
+
+M_nn_1810 <- filter(M_data_sorted, Decade == 1810)
+M_1810 <- M_nat_1810[!duplicated(M_nn_1810$Name), ]
+
+M_nn_1820 <- filter(M_data_sorted, Decade == 1820)
+M_1820 <- M_nn_1820[!duplicated(M_nn_1820$Name), ]
+
+M_nn_1830 <- filter(M_data_sorted, Decade == 1830)
+M_1830 <- M_nn_1830[!duplicated(M_nn_1830$Name), ]
+
+M_nn_1840 <- filter(M_data_sorted, Decade == 1840)
+M_1840 <- M_nn_1840[!duplicated(M_nn_1840$Name), ]
+
+M_nn_1850 <- filter(M_data_sorted, Decade == 1850)
+M_1950 <- M_nat_1950[!duplicated(M_nat_1950$Name), ]
+
+M_nn_1860 <- filter(M_data_sorted, Decade == 1860)
+M_1860 <- M_nn_1860[!duplicated(M_nn_1860$Name), ]
+
+M_nn_1870 <- filter(M_data_sorted, Decade == 1870)
+M_1870 <- M_nn_1870[!duplicated(M_nn_1870$Name), ]
+
+M_nn_1880 <- filter(M_data_sorted, Decade == 1880)
+M_1980 <- M_nn_1880[!duplicated(M_nn_1880$Name), ]
+
+M_nn_1890 <- filter(M_data_sorted, Decade == 1890)
+M_1890 <- M_nn_1890[!duplicated(M_nn_1890$Name), ]
+
+```
+
+```{}
+```
+
+```{r}
+ggplot(data = head(F_data_sorted,n = 175)) +
+  geom_area(mapping = aes(x = Year,y = Count,linetype = Name,fill = Name))
+
+```
+
+```{r}
+ggplot(data = head(M_data_nn,n = 20), mapping = aes(x = Year,y = Count, group = Decade)) +
+geom_point(mapping = aes(color = Name)) +
+geom_smooth(se = FALSE)
+
+ggplot(data = head(M_nn_1800,n = 40)) +
+geom_smooth(mapping = aes(x = Year,y = Count, linetype = Name)) +
+geom_point(mapping = aes(x = Year,y = Count, color = Name))
+```
+
+```{r}
+DC_data_grouped <- group_by(DC_data, Decade, Count)
+M_DC_data <- filter(DC_data_grouped, Gender == 'M', Decade != "pre-1800" & Decade != "1900s")
+View(M_DC_data)
+
+M_DC_sorted <- M_DC_data %>% arrange(desc(Count))
+View(M_DC_sorted)
+```
